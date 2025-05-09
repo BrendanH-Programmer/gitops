@@ -2,8 +2,8 @@ name: 🧪 Validate and 🚀 Deploy Tyne Brew Coffee
 
 on:
   push:
-    branches-ignore:
-      - main
+    branches:
+      - '**'   # triggers on all branches
   pull_request:
     branches:
       - main
