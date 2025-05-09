@@ -22,9 +22,8 @@ jobs:
 
       - name: ✅ Test 2 – Validate CSS with vnu.jar
         run: |
-          wget https://github.com/validator/validator/releases/latest/download/vnu.zip
-          unzip vnu.zip
-          java -jar vnu/vnu.jar --errors-only --skip-non-html .
+          curl -L -o vnu.jar https://github.com/validator/validator/releases/latest/download/vnu.jar
+          java -jar vnu.jar --errors-only --skip-non-html .
       
       - name: ✅ Test 3 – Check file permissions
         run: |
