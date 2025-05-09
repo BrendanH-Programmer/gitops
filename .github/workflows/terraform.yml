@@ -22,13 +22,9 @@ jobs:
       with:
         terraform_version: '1.0.11'  # Specify your Terraform version new
 
-    - name: Azure login
-      uses: azure/login@v1
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        auth-type: SERVICE_PRINCIPAL
+    - name: Azure login using CLI
+      run: |
+        echo ${{ secrets.AZURE_CLIENT_SECRET }} | az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p $(cat) --tenant ${{ secrets.AZURE_TENANT_ID }}
 
     - name: Terraform Init
       run: terraform init
