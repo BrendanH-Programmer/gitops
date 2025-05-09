@@ -22,12 +22,12 @@ jobs:
         terraform_version: '1.0.11' # Specify the version of Terraform you want to use
 
     - name: Azure login
-      uses: azure/login@v1
+      uses: azure/login@v1.6.1
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        auth-type: OIDC
+
 
     - name: Terraform Init
       run: terraform init
