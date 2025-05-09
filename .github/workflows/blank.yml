@@ -1,22 +1,65 @@
-on: 
+name: 🚀 CI and Deploy for Static Website
+
+on:
   push:
     branches:
       - main
-name: 🚀 Deploy website on push
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  web-deploy:
-    name: 🎉 Deploy website
+  validate:
+    name: ✅ Validate HTML & CSS
     runs-on: ubuntu-latest
+
     steps:
-    # Checkout the repository
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v4
-    # sync files via FTP
-    - name: 📂 Sync files via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /public_html/L5SW/Brendan/
+      - name: 📥 Checkout code
+        uses: actions/checkout@v3
+
+      - name: ✅ Validate HTML
+        uses: cyb3r-jak3/html5-validator-action@v1.5.0
+        with:
+          file: "index.html"
+
+      - name: ✅ Validate CSS
+        uses: dkhunt27/css-validator-github-action@v1
+        with:
+          css_file: "styles.css"
+
+  deploy-ftp:
+    name: 📂 Deploy via FTP
+    needs: validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Sync files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /public_html/L5SW/Brendan/
+
+  deploy-gh-pages:
+    name: 🌐 Deploy to GitHub Pages
+    needs: validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup GitHub Pages
+        uses: actions/configure-pages@v3
+
+      - name: 📤 Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./
+
+      - name: 🚀 Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
