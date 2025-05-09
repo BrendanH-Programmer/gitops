@@ -17,16 +17,11 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v3
 
-      - name: ✅ Validate HTML with W3C vnu.jar
+      - name: ✅ Validate HTML & CSS with W3C vnu.jar
         run: |
           wget https://github.com/validator/validator/releases/download/latest/vnu.jar.zip
           unzip vnu.jar.zip -d vnu
-          java -jar vnu/vnu.jar index.html
-
-      - name: ✅ Validate CSS
-        uses: dkhunt27/css-validator-github-action@v1
-        with:
-          css_file: "styles.css"
+          java -jar vnu/vnu.jar --errors-only .
 
   deploy-ftp:
     name: 📂 Deploy via FTP
