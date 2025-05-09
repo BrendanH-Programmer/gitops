@@ -129,3 +129,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <label for="description">Description:</label><br>
             <textarea id="description" name="description" required></textarea><br><br>
+
+            <label for="price">Price (£):</label><br>
+            <input type="number" id="price" name="price" step="0.01" required><br><br>
+
+            <label for="stock_quantity">Stock Quantity:</label><br>
+            <input type="number" id="stock_quantity" name="stock_quantity" required><br><br>
+
+            <label for="category_id">Category:</label><br>
+            <select id="category_id" name="category_id" required>
+                <option value="">Select a category</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= htmlspecialchars($category['category_id']) ?>">
+                        <?= htmlspecialchars($category['name']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select><br><br>
+
+            <label for="image">Image:</label><br>
+            <input type="file" id="image" name="image" accept="image/*" required><br><br>
+
+            <button type="submit">Add Product</button>
+        </form>
+    </main>
+</body>
+<footer class="main-footer">
+    <p>&copy; <?= date('Y'); ?> Tyne Brew Coffee. All rights reserved.</p>
+</footer>
+</html>
