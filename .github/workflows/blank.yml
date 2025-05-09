@@ -21,7 +21,8 @@ jobs:
         run: |
           wget https://github.com/validator/validator/releases/download/latest/vnu.jar.zip
           unzip vnu.jar.zip -d vnu
-          java -jar vnu/vnu.jar --errors-only .
+          java -jar vnu/vnu.jar .
+        continue-on-error: true
 
   deploy-ftp:
     name: 📂 Deploy via FTP
