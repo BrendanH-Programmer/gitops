@@ -24,7 +24,7 @@ jobs:
         run: |
           find . -type f -size +5M -exec echo "⚠️ Large file: {}" \;
 
-      - name: ✅ Test 3  Broken links in PHP
+      - name: ✅ Test 4  Broken links in PHP
         run: |
           grep -r 'href="' . | grep -vE 'https?://' || echo "No local links to check."
 
