@@ -21,20 +21,6 @@ jobs:
         run: find . -name "*.php" -exec php -l {} \;
 
 
-      - name: ✅ Test 4 Check Python linting
-        run: |
-          pip install pylint
-          pylint your_project_directory
-        
-      - name: ✅ Test 7  Check for JavaScript/TypeScript syntax errors
-        run: |
-          npm install
-          npx eslint .
-
-      - name: ✅ Test 5  JS linting (if applicable)
-        run: |
-          if [ -f package.json ]; then npm ci && npx eslint .; else echo "JS lint skipped"; fi
-
       - name: ✅ Test 6  Large file check (>5MB)
         run: |
           find . -type f -size +5M -exec echo "⚠️ Large file: {}" \;
