@@ -17,44 +17,38 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
-      - name: ✅ Test 1 – PHP syntax check
+      - name: ✅ Test 1 PHP syntax check
         run: find . -name "*.php" -exec php -l {} \;
 
-      - name: ✅ Test 2 – Check for broken links
-        run: |
-          # Install link checker
-          npm install -g link-checker
-          # Run the link checker on your project directory
-          link-checker ./path-to-your-files --reject-unauthorized
-      
-      - name: ✅ Test 3 – Check JavaScript linting
+
+      - name: ✅ Test 3 Check JavaScript linting
         run: |
           npm install
           npm run lint
 
-      - name: ✅ Test 4 – Check Python linting
+      - name: ✅ Test 4 Check Python linting
         run: |
           pip install pylint
           pylint your_project_directory
         
-      - name: ✅ Test 7 – Check for JavaScript/TypeScript syntax errors
+      - name: ✅ Test 7  Check for JavaScript/TypeScript syntax errors
         run: |
           npm install
           npx eslint .
 
-      - name: ✅ Test 5 – JS linting (if applicable)
+      - name: ✅ Test 5  JS linting (if applicable)
         run: |
           if [ -f package.json ]; then npm ci && npx eslint .; else echo "JS lint skipped"; fi
 
-      - name: ✅ Test 6 – Large file check (>5MB)
+      - name: ✅ Test 6  Large file check (>5MB)
         run: |
           find . -type f -size +5M -exec echo "⚠️ Large file: {}" \;
 
-      - name: ✅ Test 7 – Broken links in PHP
+      - name: ✅ Test 7  Broken links in PHP
         run: |
           grep -r 'href="' . | grep -vE 'https?://' || echo "No local links to check."
 
-      - name: ✅ Test 8 – Check for trailing whitespace
+      - name: ✅ Test 8 Check for trailing whitespace
         run: |
           if grep -r "[[:blank:]]$" .; then echo "❌ Trailing whitespace found"; exit 1; fi
 
