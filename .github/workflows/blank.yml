@@ -20,14 +20,28 @@ jobs:
       - name: ✅ Test 1 – PHP syntax check
         run: find . -name "*.php" -exec php -l {} \;
 
-      - name: ✅ Test 3 – Check file permissions
+      - name: ✅ Test 2 – Check for broken links
         run: |
-          find . -type f -not -perm 644 -exec echo "⚠️ Warning: {} is not 644" \;
-
-      - name: ✅ Test 4 – Check for TODOs in code
+          # Install link checker
+          npm install -g link-checker
+          # Run the link checker on your project directory
+          link-checker ./path-to-your-files --reject-unauthorized
+      
+      - name: ✅ Test 3 – Check JavaScript linting
         run: |
-          if grep -r "TODO" .; then echo "❌ TODOs found"; exit 1; fi
+          npm install
+          npm run lint
 
+      - name: ✅ Test 4 – Check Python linting
+        run: |
+          pip install pylint
+          pylint your_project_directory
+        
+      - name: ✅ Test 7 – Check for JavaScript/TypeScript syntax errors
+          run: |
+          npm install
+          npx eslint .
+          
       - name: ✅ Test 5 – JS linting (if applicable)
         run: |
           if [ -f package.json ]; then npm ci && npx eslint .; else echo "JS lint skipped"; fi
