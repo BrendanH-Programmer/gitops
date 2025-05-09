@@ -20,10 +20,12 @@ jobs:
       - name: ✅ Test 1 – PHP syntax check
         run: find . -name "*.php" -exec php -l {} \;
 
-      - name: ✅ Test 2 – Validate CSS with vnu.jar
+      - name: ✅ Test 2 – Validate HTML/CSS with vnu.jar
         run: |
-          curl -L -o vnu.jar https://github.com/validator/validator/releases/latest/download/vnu.jar
-          java -jar vnu.jar --errors-only --skip-non-html .
+          curl -L -o vnu.zip https://github.com/validator/validator/releases/latest/download/vnu.zip
+          unzip -q vnu.zip
+          java -jar ./vnu.jar --errors-only --skip-non-html .
+      
       
       - name: ✅ Test 3 – Check file permissions
         run: |
