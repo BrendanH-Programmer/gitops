@@ -1,4 +1,4 @@
-name: 🧪 Validate and 🚀 Deploy Tyne Brew Coffee
+name: Validate and Deploy Tyne Brew Coffee
 
 on:
   push:
@@ -10,56 +10,60 @@ on:
 
 jobs:
   test:
-    name: 🧪 Run Tests on Sub-Branches
+    name: Run Tests on Sub-Branches
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: ✅ Test 1 PHP syntax check
+      - name: Test 1 PHP syntax check
         run: find . -name "*.php" -exec php -l {} \;
 
-      - name: ✅ Test 2  Large file check (>5MB)
+      - name: Test 2  Large file check (>5MB)
         run: |
-          find . -type f -size +5M -exec echo "⚠️ Large file: {}" \;
+          find . -type f -size +5M -exec echo " Large file: {}" \;
 
-      - name: ✅ Test 4  Broken links in PHP
+      - name: Test 3  Broken links in PHP
         run: |
           grep -r 'href="' . | grep -vE 'https?://' || echo "No local links to check."
 
+      - name: test 4 Check for leftover console.log statements
+        run: |
+          grep -rn "console.log" . && (echo "Remove debug logs!" && exit 1) || echo "No console logs found."
+
   merge:
-    name: 🔀 Merge to Main Branch
+    name: Merge to Main Branch
     needs: test
     runs-on: ubuntu-latest
     if: success()
 
     steps:
-      - name: 📥 Checkout Code
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🔁 Merge current branch to main
+      - name: Merge current branch to main
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git fetch origin main
           git checkout main
-          git merge --no-ff ${{ github.ref_name }} -m "🔀 Auto-merge ${{ github.ref_name }} into main"
+          git merge --no-ff ${{ github.ref_name }} -m " Auto-merge ${{ github.ref_name }} into main"
           git push origin main
 
   ftp-deploy:
-    name: 📦 Deploy to FTP
+    name: Deploy to FTP
     needs: merge
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: 📥 Checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: 📂 Sync files via FTP
+      - name: Sync files via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
