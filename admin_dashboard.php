@@ -207,3 +207,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             <p><strong>Total Revenue:</strong> £<?= number_format($revenueBreakdown['total'], 2); ?></p>
         </div>
     </div>
+
+    <!-- Top Selling Products -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Top-Selling Products</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>Total Quantity Sold</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                $topProducts = getTopSellingProducts($conn);
+                if (!empty($topProducts)) {
+                    foreach ($topProducts as $key => $product) { ?>
+                        <tr>
+                            <td><?= htmlspecialchars($key + 1); ?></td>
+                            <td><?= htmlspecialchars($product['name']); ?></td>
+                            <td><?= htmlspecialchars($product['total_quantity']); ?></td>
+                        </tr>
+                    <?php }
+                } else { ?>
+                    <tr>
+                        <td colspan="3">No sales data available.</td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<footer class="main-footer">
+    <p>&copy; <?php date('Y'); ?> Tyne Brew Coffee. All rights reserved.</p>
+</footer>
+</html>
