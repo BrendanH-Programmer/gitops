@@ -38,10 +38,10 @@ jobs:
           pylint your_project_directory
         
       - name: ✅ Test 7 – Check for JavaScript/TypeScript syntax errors
-          run: |
-          npm install
-          npx eslint .
-          
+        run: |
+        npm install
+        npx eslint .
+
       - name: ✅ Test 5 – JS linting (if applicable)
         run: |
           if [ -f package.json ]; then npm ci && npx eslint .; else echo "JS lint skipped"; fi
