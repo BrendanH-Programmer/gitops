@@ -22,9 +22,15 @@ jobs:
 
       - name: ✅ Test 2 – Validate HTML/CSS with vnu.jar
         run: |
-          curl -L -o vnu.zip https://github.com/validator/validator/releases/latest/download/vnu.zip
+          # Get the latest release tag from GitHub API
+          LATEST_TAG=$(curl -s https://api.github.com/repos/validator/validator/releases/latest | grep tag_name | cut -d '"' -f4)
+      
+          # Download the correct vnu.zip using the latest tag
+          curl -L -o vnu.zip https://github.com/validator/validator/releases/download/$LATEST_TAG/vnu.zip
+      
+          # Unzip and run the validator
           unzip -q vnu.zip
-          java -jar ./vnu.jar --errors-only --skip-non-html .
+          java -jar ./vnu*/vnu.jar --errors-only --skip-non-html .
       
       
       - name: ✅ Test 3 – Check file permissions
