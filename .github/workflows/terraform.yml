@@ -19,7 +19,7 @@ jobs:
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: '1.0.11'
+        terraform_version: '1.0.11' # Specify the version of Terraform you want to use
 
     - name: Azure login
       uses: azure/login@v1
