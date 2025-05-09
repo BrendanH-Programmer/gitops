@@ -34,7 +34,7 @@ jobs:
 
       - name: Test 5 Install tidy
         run: sudo apt-get install -y tidy
-        
+
       - name: Test 6 Validate HTML files
         run: |
             tidy -e path/to/your/file.html
@@ -47,7 +47,7 @@ jobs:
           else
             echo "No trailing whitespace."
           fi
-              
+
   merge:
     name: Merge to Main Branch
     needs: test
