@@ -20,7 +20,6 @@ jobs:
       - name: ✅ Test 1 PHP syntax check
         run: find . -name "*.php" -exec php -l {} \;
 
-
       - name: ✅ Test 6  Large file check (>5MB)
         run: |
           find . -type f -size +5M -exec echo "⚠️ Large file: {}" \;
