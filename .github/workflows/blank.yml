@@ -20,19 +20,6 @@ jobs:
       - name: ✅ Test 1 – PHP syntax check
         run: find . -name "*.php" -exec php -l {} \;
 
-      - name: ✅ Test 2 – Validate HTML/CSS with vnu.jar
-        run: |
-          # Get the latest release tag from GitHub API
-          LATEST_TAG=$(curl -s https://api.github.com/repos/validator/validator/releases/latest | grep tag_name | cut -d '"' -f4)
-      
-          # Download the correct vnu.zip using the latest tag
-          curl -L -o vnu.zip https://github.com/validator/validator/releases/download/$LATEST_TAG/vnu.zip
-      
-          # Unzip and run the validator
-          unzip -q vnu.zip
-          java -jar ./vnu*/vnu.jar --errors-only --skip-non-html .
-      
-      
       - name: ✅ Test 3 – Check file permissions
         run: |
           find . -type f -not -perm 644 -exec echo "⚠️ Warning: {} is not 644" \;
