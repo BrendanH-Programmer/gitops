@@ -20,13 +20,12 @@ jobs:
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: '1.0.11'  # Specify your Terraform version
+        terraform_version: '1.0.11'  # Specify your Terraform version new
 
     - name: Azure login
       uses: azure/login@v1
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         auth-type: SERVICE_PRINCIPAL
