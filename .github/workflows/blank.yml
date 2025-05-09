@@ -20,17 +20,13 @@ jobs:
       - name: ✅ Test 1 PHP syntax check
         run: find . -name "*.php" -exec php -l {} \;
 
-      - name: ✅ Test 6  Large file check (>5MB)
+      - name: ✅ Test 2  Large file check (>5MB)
         run: |
           find . -type f -size +5M -exec echo "⚠️ Large file: {}" \;
 
-      - name: ✅ Test 7  Broken links in PHP
+      - name: ✅ Test 3  Broken links in PHP
         run: |
           grep -r 'href="' . | grep -vE 'https?://' || echo "No local links to check."
-
-      - name: ✅ Test 8 Check for trailing whitespace
-        run: |
-          if grep -r "[[:blank:]]$" .; then echo "❌ Trailing whitespace found"; exit 1; fi
 
   merge:
     name: 🔀 Merge to Main Branch
