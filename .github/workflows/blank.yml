@@ -28,16 +28,26 @@ jobs:
         run: |
           grep -r 'href="' . | grep -vE 'https?://' || echo "No local links to check."
 
-      - name: test 4 Check for leftover console.log statements
+      - name: Test 4 Check for leftover console.log statements
         run: |
           grep -rn "console.log" . && (echo "Remove debug logs!" && exit 1) || echo "No console logs found."
 
-      - name: test 5 Install tidy
+      - name: Test 5 Install tidy
         run: sudo apt-get install -y tidy
         
-      - name: test 6 Validate HTML files
+      - name: Test 6 Validate HTML files
         run: |
             tidy -e path/to/your/file.html
+
+      - name: Test 7 Check for trailing whitespace
+        run: |
+          if grep -rnI '[[:blank:]]$' .; then
+            echo "Trailing whitespace found!"
+            exit 1
+          else
+            echo "No trailing whitespace."
+          fi
+              
   merge:
     name: Merge to Main Branch
     needs: test
