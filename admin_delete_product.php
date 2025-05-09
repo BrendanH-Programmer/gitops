@@ -1,4 +1,23 @@
+<?php
+include_once 'session_manager.php';
+include_once 'db.php';
+include_once 'auth.php';
 
+ensureAuthenticated();
+ensureAdmin();
+displayAdminLink();
+
+// Initialize the database connection
+$db = new Database();
+$conn = $db->connect();
+
+// Fetch all products with pagination
+$limit = 10; // Number of products per page
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// Message initialization
+$message = "";
 
 // Retrieve message from session if available
 if (!empty($_SESSION['message'])) {
@@ -130,3 +149,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product_id']))
                     <tr>
                         <td colspan="7" class="text-center">No products found.</td>
                     </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<footer class="main-footer">
+    <p>&copy; <?= date('Y'); ?> Tyne Brew Coffee. All rights reserved.</p>
+</footer>
+</html>
