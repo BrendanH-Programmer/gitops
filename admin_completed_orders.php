@@ -1,4 +1,23 @@
-$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+<?php
+include_once 'session_manager.php';
+include_once 'db.php';
+include_once 'auth.php';
+
+// Initialize database connection
+$db = new Database();
+$conn = $db->connect();
+
+ensureAuthenticated();
+ensureAdmin();
+displayAdminLink();
+
+
+try {
+    // Fetch all completed orders
+    $stmt = $conn->prepare("SELECT * FROM orders WHERE status = :status");
+    $stmt->bindValue(':status', 'completed', PDO::PARAM_STR);
+    $stmt->execute();
+    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     // Redirect to the error page if there's a database error
     header("Location: error_page.php?error=Failed Connection");  // Redirect to the error page
