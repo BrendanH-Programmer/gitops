@@ -32,6 +32,12 @@ jobs:
         run: |
           grep -rn "console.log" . && (echo "Remove debug logs!" && exit 1) || echo "No console logs found."
 
+      - name: test 5 Install tidy
+        run: sudo apt-get install -y tidy
+        
+      - name: test 6 Validate HTML files
+        run: |
+            tidy -e path/to/your/file.html
   merge:
     name: Merge to Main Branch
     needs: test
