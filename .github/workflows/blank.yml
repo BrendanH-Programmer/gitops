@@ -25,21 +25,19 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /public_html/L5SW/Brendan/
 
-  validate:
-    name: ✅ Validate PHP & CSS files
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v3
-
-      - name: ✅ Validate PHP and CSS using vnu.jar
-        run: |
-          wget https://github.com/validator/validator/releases/download/latest/vnu.jar.zip
-          unzip vnu.jar.zip -d vnu
-          # Validate all .php and .css files in the repo
-          java -jar vnu/vnu.jar --errors-only --filterfile vnu-ignore.txt --skip-non-html .
-        # Optional: continue even if validation fails (not recommended)
-        # continue-on-error: true
+      validate:
+        name: ✅ Validate PHP & CSS files
+        runs-on: ubuntu-latest
+        steps:
+          - name: 📥 Checkout code
+            uses: actions/checkout@v3
+    
+          - name: ✅ Validate PHP and CSS using vnu.jar
+            run: |
+              # Download the correct vnu.jar version
+              wget https://github.com/validator/validator/releases/download/2025-05-09/vnu.jar
+              # Run validation
+              java -jar vnu.jar --errors-only --skip-non-html .
 
   deploy-gh-pages:
     name: 🌐 Deploy to GitHub Pages
