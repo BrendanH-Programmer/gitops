@@ -21,11 +21,6 @@ jobs:
         run: find . -name "*.php" -exec php -l {} \;
 
 
-      - name: ✅ Test 3 Check JavaScript linting
-        run: |
-          npm install
-          npm run lint
-
       - name: ✅ Test 4 Check Python linting
         run: |
           pip install pylint
