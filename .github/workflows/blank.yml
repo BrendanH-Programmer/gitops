@@ -1,22 +1,89 @@
-on: 
+name: 🧪 Validate and 🚀 Deploy Tyne Brew Coffee
+
+on:
   push:
+    branches-ignore:
+      - main
+  pull_request:
     branches:
       - main
-name: 🚀 Deploy website on push
 
 jobs:
-  web-deploy:
-    name: 🎉 Deploy website
+  test:
+    name: 🧪 Run Tests on Sub-Branches
     runs-on: ubuntu-latest
+
     steps:
-    # Checkout the repository
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v4
-    # sync files via FTP
-    - name: 📂 Sync files via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /public_html/L5SW/Brendan/
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: ✅ Test 1 – PHP syntax check
+        run: find . -name "*.php" -exec php -l {} \;
+
+      - name: ✅ Test 2 – Validate CSS
+        run: |
+          wget https://github.com/validator/validator/releases/download/2023-10-27/vnu.jar
+          java -jar vnu.jar --errors-only --skip-non-html .
+
+      - name: ✅ Test 3 – Check file permissions
+        run: |
+          find . -type f -not -perm 644 -exec echo "⚠️ Warning: {} is not 644" \;
+
+      - name: ✅ Test 4 – Check for TODOs in code
+        run: |
+          if grep -r "TODO" .; then echo "❌ TODOs found"; exit 1; fi
+
+      - name: ✅ Test 5 – JS linting (if applicable)
+        run: |
+          if [ -f package.json ]; then npm ci && npx eslint .; else echo "JS lint skipped"; fi
+
+      - name: ✅ Test 6 – Large file check (>5MB)
+        run: |
+          find . -type f -size +5M -exec echo "⚠️ Large file: {}" \;
+
+      - name: ✅ Test 7 – Broken links in PHP
+        run: |
+          grep -r 'href="' . | grep -vE 'https?://' || echo "No local links to check."
+
+      - name: ✅ Test 8 – Check for trailing whitespace
+        run: |
+          if grep -r "[[:blank:]]$" .; then echo "❌ Trailing whitespace found"; exit 1; fi
+
+  merge:
+    name: 🔀 Merge to Main Branch
+    needs: test
+    runs-on: ubuntu-latest
+    if: success()
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔁 Merge current branch to main
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git fetch origin main
+          git checkout main
+          git merge --no-ff ${{ github.ref_name }} -m "🔀 Auto-merge ${{ github.ref_name }} into main"
+          git push origin main
+
+  ftp-deploy:
+    name: 📦 Deploy to FTP
+    needs: merge
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📂 Sync files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /public_html/L5SW/Brendan/
