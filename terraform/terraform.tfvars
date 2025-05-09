@@ -1,6 +1,7 @@
 # terraform.tfvars
 
-client_id       = "your-client-id"         
-client_secret   = "your-client-secret"   
-tenant_id       = "your-tenant-id"         
-subscription_id = "your-subscription-id"  
+client_id       = var.azure_client_id
+client_secret   = var.azure_client_secret
+tenant_id       = var.azure_tenant_id
+subscription_id = var.azure_subscription_id
+ 
