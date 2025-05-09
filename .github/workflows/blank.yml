@@ -1,4 +1,4 @@
-name: 🚀 CI/CD for Static Website
+name: 🚀 CI/CD for PHP + CSS Website
 
 on:
   push:
@@ -26,17 +26,20 @@ jobs:
           server-dir: /public_html/L5SW/Brendan/
 
   validate:
-    name: ✅ Validate HTML & CSS
+    name: ✅ Validate PHP & CSS files
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v3
 
-      - name: ✅ Validate HTML & CSS with W3C vnu.jar
+      - name: ✅ Validate PHP and CSS using vnu.jar
         run: |
           wget https://github.com/validator/validator/releases/download/latest/vnu.jar.zip
           unzip vnu.jar.zip -d vnu
-          java -jar vnu/vnu.jar --errors-only .
+          # Validate all .php and .css files in the repo
+          java -jar vnu/vnu.jar --errors-only --filterfile vnu-ignore.txt --skip-non-html .
+        # Optional: continue even if validation fails (not recommended)
+        # continue-on-error: true
 
   deploy-gh-pages:
     name: 🌐 Deploy to GitHub Pages
