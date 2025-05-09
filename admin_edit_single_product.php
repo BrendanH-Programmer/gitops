@@ -1,4 +1,91 @@
-header("Location: admin_edit_product.php?message=Product updated successfully!");
+<?php
+include_once 'session_manager.php';
+include_once 'db.php';
+include_once 'auth.php';
+
+ensureAuthenticated();
+ensureAdmin();
+displayAdminLink();
+
+// Initialize database connection
+$db = new Database();
+$conn = $db->connect();
+
+// Fetch product ID
+if (empty($_GET['product_id']) && empty($_POST['product_id'])) {
+    header("Location: error_page.php?error=Product not found.");
+    exit;
+}
+
+$product_id = $_GET['product_id'] ?? $_POST['product_id'];
+
+// Fetch product details
+try {
+    $stmt = $conn->prepare("SELECT * FROM products WHERE product_id = :product_id");
+    $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$product) {
+        header("Location: error_page.php?error=Product not found.");
+        exit;
+    }
+} catch (PDOException $e) {
+    header("Location: error_page.php?error=Error fetching product details.");
+    exit;
+}
+
+// Fetch categories for dropdown
+try {
+    $category_stmt = $conn->prepare("SELECT * FROM categories");
+    $category_stmt->execute();
+    $categories = $category_stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    header("Location: error_page.php?error=Error fetching categories.");
+    exit;
+}
+
+// Initialize variables
+$message = "";
+$image_url = $product['image_url'];
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'] ?? '';
+    $description = $_POST['description'] ?? '';
+    $price = $_POST['price'] ?? 0;
+    $category_id = $_POST['category_id'] ?? null;
+
+    // Handle image upload
+    if (!empty($_FILES['new_image']['name'])) {
+        $target_dir = "img/";
+        $new_image_name = uniqid() . "_" . basename($_FILES['new_image']['name']);
+        $target_file = $target_dir . $new_image_name;
+
+        if (move_uploaded_file($_FILES['new_image']['tmp_name'], $target_file)) {
+            $image_url = $target_file;
+        } else {
+            $message = "Error uploading the image. Please try again.";
+        }
+    }
+
+    // Update product in the database
+    if (empty($message)) {
+        try {
+            $stmt = $conn->prepare("
+                UPDATE products 
+                SET name = :name, description = :description, price = :price, category_id = :category_id, image_url = :image_url
+                WHERE product_id = :product_id
+            ");
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':price', $price);
+            $stmt->bindParam(':category_id', $category_id, PDO::PARAM_INT);
+            $stmt->bindParam(':image_url', $image_url);
+            $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            header("Location: admin_edit_product.php?message=Product updated successfully!");
             exit;
         } catch (PDOException $e) {
             $message = "Error updating product: " . htmlspecialchars($e->getMessage());
