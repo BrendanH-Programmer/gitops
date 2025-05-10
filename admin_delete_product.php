@@ -76,7 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product_id']))
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
