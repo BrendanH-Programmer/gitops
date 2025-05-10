@@ -1,6 +1,15 @@
-# variables.tf
+variable "client_id" {
+  type = string
+}
 
-variable "azure_client_id" {}
-variable "azure_client_secret" {}
-variable "azure_tenant_id" {}
-variable "azure_subscription_id" {}
+variable "client_secret" {
+  type = string
+}
+
+variable "tenant_id" {
+  type = string
+}
+
+variable "subscription_id" {
+  type = string
+}
