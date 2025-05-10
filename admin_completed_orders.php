@@ -11,7 +11,6 @@ ensureAuthenticated();
 ensureAdmin();
 displayAdminLink();
 
-
 try {
     // Fetch all completed orders
     $stmt = $conn->prepare("SELECT * FROM orders WHERE status = :status");
