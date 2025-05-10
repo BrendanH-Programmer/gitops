@@ -34,9 +34,12 @@ jobs:
       working-directory: ./terraform
 
     - name: Terraform Plan
-      run: terraform plan -var-file="terraform.tfvars"
-      working-directory: ./terraform
-      
+      run: terraform plan \
+        -var "client_id=${{ secrets.AZURE_CLIENT_ID }}" \
+        -var "client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" \
+        -var "tenant_id=${{ secrets.AZURE_TENANT_ID }}" \
+        -var "subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+
     - name: Terraform Apply
       run: terraform apply -auto-approve
       working-directory: ./terraform
