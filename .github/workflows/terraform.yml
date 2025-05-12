@@ -30,7 +30,7 @@ jobs:
         client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
 
     - name: Terraform Init
-      run: terraform init -var "client_id=${{ secrets.AZURE_CLIENT_ID }}" -var "client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" -var "tenant_id=${{ secrets.AZURE_TENANT_ID }}" -var "subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+      run: terraform init 
       working-directory: ./terraform
 
     - name: Terraform Plan
