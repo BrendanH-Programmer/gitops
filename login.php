@@ -1,3 +1,7 @@
+<?php
+include_once 'session_manager.php';
+include_once 'auth.php';
+include_once 'db.php';
 
 // Check if the user is already logged in, if so, redirect to index.php
 if (isset($_SESSION['username'])) {
@@ -79,4 +83,3 @@ try {
         <p>&copy; <?= date('Y'); ?> Tyne Brew Coffee. All rights reserved.</p>
     </footer>
 </html>
-
