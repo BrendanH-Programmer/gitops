@@ -77,3 +77,43 @@ $cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p><strong>Total Price:</strong> £<?= number_format($order['total_price'], 2) ?></p>
         <p><strong>Payment Method:</strong> <?= htmlspecialchars($order['payment_method']); ?></p>
         <p><strong>Status:</strong> <?= htmlspecialchars($order['status']) ?></p>
+
+        <h2 style="color: #3e2723;">Items in Your Order</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($cartItems as $item): ?>
+                <tr>
+                    <td><?= htmlspecialchars($item['name']) ?></td>
+                    <td><?= htmlspecialchars($item['quantity']) ?></td>
+                    <td>£<?= number_format($item['price'], 2) ?></td>
+                    <td>£<?= number_format($item['quantity'] * $item['price'], 2) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <!-- Example Form with CSRF Token -->
+        <form action="order_history.php" method="post">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+            <button type="submit" class="btn btn-primary">Order History</button>
+        </form>
+                <!-- Example Form with CSRF Token -->
+                <form action="index.php" method="post">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+            <button type="submit" class="btn btn-primary">Back To Store</button>
+        </form>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; <?php date('Y'); ?> Tyne Brew Coffee. All rights reserved.</p>
+    </footer>
+</body>
+</html>
