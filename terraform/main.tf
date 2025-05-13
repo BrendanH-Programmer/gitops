@@ -4,10 +4,47 @@ provider "azurerm" {
   tenant_id       = var.tenant_id
   subscription_id = var.subscription_id
 
-  features {}
+  features {}  # Required block even if empty
 }
 
 resource "azurerm_resource_group" "example" {
-+  name     = "example-resources-v2"   # new name
-  location = "UK SOUTH"
+  name     = var.resource_group_name
+  location = "UK South"
+}
+
+resource "azurerm_virtual_network" "example" {
+  name                = "example-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+}
+
+output "resource_group_name" {
+  value = azurerm_resource_group.example.name
+}
+
+variable "client_id" {
+  type        = string
+  description = "Azure client ID"
+}
+
+variable "client_secret" {
+  type        = string
+  description = "Azure client secret"
+}
+
+variable "tenant_id" {
+  type        = string
+  description = "Azure tenant ID"
+}
+
+variable "subscription_id" {
+  type        = string
+  description = "Azure subscription ID"
+}
+
+variable "resource_group_name" {
+  description = "The name of the resource group"
+  type        = string
+  default     = "example-resources"
 }
