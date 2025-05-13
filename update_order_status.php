@@ -1,4 +1,23 @@
-t;
+<?php
+include_once 'session_manager.php';
+include_once 'db.php';
+include_once 'auth.php'; 
+
+ensureAuthenticated();
+ensureAdmin();
+displayAdminLink();
+
+// Connect to the database
+$db = new Database();
+$conn = $db->connect();
+
+// Get the order ID from the URL parameter
+$order_id = isset($_GET['order_id']) && is_numeric($_GET['order_id']) ? $_GET['order_id'] : null;
+
+// Check if order_id is valid
+if (!$order_id) {
+    header("Location: error_page.php?error=Order not found.");
+    exit;
 }
 
 // Fetch the order details
