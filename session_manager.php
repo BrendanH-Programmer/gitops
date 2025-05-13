@@ -1,3 +1,7 @@
+<?php
+// Set strict and secure session configurations BEFORE session_start()
+$lifetime = 1800; // Session lifetime: 30 minutes
+
 session_set_cookie_params([
     'lifetime' => $lifetime,
     'domain' => 'sencldigitech.co.uk', // Adjust domain to your site's root
