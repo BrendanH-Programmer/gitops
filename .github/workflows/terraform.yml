@@ -34,8 +34,10 @@ jobs:
       working-directory: ./terraform
 
     - name: Force Unlock Terraform State
-      run: yes | terraform force-unlock 784aaf61-df49-dd22-ac27-d551e3168bbc
+      run: |
+        echo "yes" | terraform force-unlock 784aaf61-df49-dd22-ac27-d551e3168bbc
       working-directory: ./terraform
+
 
     - name: Terraform Plan
       run: terraform plan -var "client_id=${{ secrets.ARM_CLIENT_ID }}" -var "client_secret=${{ secrets.ARM_CLIENT_SECRET }}" -var "tenant_id=${{ secrets.ARM_TENANT_ID }}" -var "subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}"
