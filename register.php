@@ -1,3 +1,7 @@
+<?php
+include_once 'session_manager.php';
+include_once 'db.php';
+include_once 'auth.php';
 
 
 // Ensure the user is not already logged in (if they are, redirect them)
@@ -133,3 +137,9 @@ try {
 
     <button type="submit" name="register">Register</button>
 </form>
+
+</body>
+<footer class="main-footer">
+        <p>&copy; <?= date('Y'); ?> Tyne Brew Coffee. All rights reserved.</p>
+    </footer>
+</html>
