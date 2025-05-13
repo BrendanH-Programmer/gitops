@@ -19,10 +19,6 @@ resource "azurerm_virtual_network" "example" {
   resource_group_name = azurerm_resource_group.example.name
 }
 
-output "resource_group_name" {
-  value = azurerm_resource_group.example.name
-}
-
 variable "resource_group_name" {
   description = "The name of the resource group"
   type        = string
