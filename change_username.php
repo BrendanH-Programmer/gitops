@@ -1,4 +1,75 @@
+<?php
+include_once 'session_manager.php';
+include_once 'db.php';
+include_once 'auth.php';
 
+ensureAuthenticated();
+displayAdminLink(); 
+
+// Start session and retrieve current username
+$username = $_SESSION['username'] ?? ''; // Use null coalescing operator for safety
+
+// Initialize the database connection
+$db = new Database();
+$conn = $db->connect();
+if ($conn === null) {
+    header("Location: error_page.php?error=Database error.");
+    exit;
+}
+
+// Function to display messages
+function showMessage($message, $type = 'success') {
+    echo "<div class='alert alert-$type'>" . htmlspecialchars($message) . "</div>";
+}
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Sanitize user input
+    $new_username = htmlspecialchars(trim($_POST['new_username']));
+    $confirm_new_username = htmlspecialchars(trim($_POST['confirm_new_username']));
+    $re_enter_password = htmlspecialchars(trim($_POST['re_enter_password']));
+
+    // Validate input
+    if (empty($new_username) || empty($confirm_new_username) || empty($re_enter_password)) {
+        showMessage("All fields are required.", 'danger');
+    } elseif ($new_username !== $confirm_new_username) {
+        showMessage("New usernames don't match.", 'danger');
+    } else {
+        // Verify current password
+        $stmt = $conn->prepare("SELECT password FROM users WHERE username = ?");
+        $stmt->execute([$username]);
+        $stored_password = $stmt->fetchColumn();
+
+        if (!password_verify($re_enter_password, $stored_password)) {
+            showMessage("Incorrect current password.", 'danger');
+        } else {
+            // Check if the new username is already taken
+            $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE username = ?");
+            $stmt->execute([$new_username]);
+            $count = $stmt->fetchColumn();
+
+            if ($count > 0) {
+                showMessage("Username already exists. Please choose another.", 'danger');
+            } else {
+                // Update the username in the database
+                $stmt = $conn->prepare("UPDATE users SET username = ? WHERE username = ?");
+                if ($stmt->execute([$new_username, $username])) {
+                    // Update session and set success message
+                    $_SESSION['username'] = $new_username;
+                    $_SESSION['success_message'] = "Username changed successfully!";
+                    
+                    // Redirect to profile page
+                    header("Location: profile.php");
+                    exit();
+                } else {
+                    showMessage("Failed to update username. Please try again.", 'danger');
+                }
+            }
+        }
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
