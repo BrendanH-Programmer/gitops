@@ -23,26 +23,6 @@ output "resource_group_name" {
   value = azurerm_resource_group.example.name
 }
 
-variable "client_id" {
-  type        = string
-  description = "Azure client ID"
-}
-
-variable "client_secret" {
-  type        = string
-  description = "Azure client secret"
-}
-
-variable "tenant_id" {
-  type        = string
-  description = "Azure tenant ID"
-}
-
-variable "subscription_id" {
-  type        = string
-  description = "Azure subscription ID"
-}
-
 variable "resource_group_name" {
   description = "The name of the resource group"
   type        = string
