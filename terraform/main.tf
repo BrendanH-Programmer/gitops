@@ -8,7 +8,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "example" {
-  name     = "example-resources-new3"  # <--- changed name
+  name     = "example-resources-new4"  # <--- changed name
   location = "UK South"
 }
 

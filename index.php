@@ -1,4 +1,11 @@
 <?php
+include_once 'session_manager.php';
+include_once 'db.php';
+include_once 'cart_function.php';
+include_once 'auth.php';
+
+isLoggedIn();
+displayAdminLink();
 
 // Instantiate DB class and get connection
 $db = new Database();
