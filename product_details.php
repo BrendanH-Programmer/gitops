@@ -1,4 +1,58 @@
-ef="register.php">Register</a>
+<?php
+include_once 'session_manager.php';
+include_once 'db.php';
+include_once 'cart_function.php';
+include_once 'auth.php';
+
+isLoggedIn();
+displayAdminLink();
+
+$db = new Database();
+$conn = $db->connect();
+
+// Check if product ID is passed in the query string
+if (isset($_GET['id'])) {
+    $product_id = $_GET['id'];
+
+    // Ensure that product ID is an integer
+    $product_id = intval($product_id); 
+
+    // Fetch product details from the database using a prepared statement
+    $query = "SELECT * FROM products WHERE product_id = :product_id";
+    $stmt = $conn->prepare($query);
+    $stmt->bindValue(':product_id', $product_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Check if product exists
+    if (!$product) {
+        header("Location: error_page.php?error=Product not found.");
+        exit;
+    }
+} else {
+    header("Location: error_page.php?error=Product not found.");
+    exit;
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= htmlspecialchars($product['name']) ?></title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <!-- Left side: Profile/Register link -->
+            <div class="header-left">
+                <?php if (isLoggedIn()) : ?>
+                    <a href="profile.php">Profile</a>
+                <?php else : ?>
+                    <a href="register.php">Register</a>
                 <?php endif; ?>
             </div>
 
