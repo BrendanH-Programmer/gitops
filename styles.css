@@ -6,3 +6,759 @@ body {
     margin: 0;
     padding: 0;
 }
+
+h1, h2 {
+    color: whitesmoke;
+}
+h3 {
+    color: #3e2723;
+}
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+/* Header Styles */
+header {
+    background-color: #3e2723; /* Dark coffee brown for contrast */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    font-family: 'Merriweather', serif; /* Elegant serif for sophistication */
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+header a {
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+/* Cart Link - Right aligned */
+.cart-link {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 1.2rem;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 3rem 5%;
+    justify-items: center;
+    background-color: #fff;
+    margin-top: 2rem;
+}
+
+.product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 250px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.product-card img {
+    max-width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.product-card h2 {
+    font-size: 1.5rem;
+    color: #6f4f37; /* Deep coffee brown */
+    margin-bottom: 0.5rem;
+}
+.product-card h5 {
+    font-size: 1rem;
+    color: #966c4d; 
+    margin-bottom: 0.5rem;
+}
+.product-card p {
+    font-size: 1rem;
+    color: #e20909;
+    margin-bottom: 1rem;
+}
+
+/* Forms */
+.login-form, .register-form, .product-details, .form-group {
+    margin-bottom: 15px;
+}
+
+input[type="text"], input[type="email"], input[type="password"], button {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+button {
+    background-color: #8d6e63;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #7b5d4d;
+}
+
+/* Product Details */
+.product-details {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Cart Table */
+#cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#cart-table thead {
+    background-color: #f4f4f4;
+    text-align: left;
+}
+
+#cart-table th, #cart-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+#cart-table th {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#cart-table td {
+    color: #333;
+}
+
+#cart-table input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+}
+
+#cart-table button {
+    padding: 5px 10px;
+    background-color: #e57373;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+#cart-table button:hover {
+    background-color: #d32f2f;
+}
+
+/* Checkout Button */
+.checkout-btn {
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.checkout-btn:hover {
+    background-color: #388e3c;
+}
+
+/* Footer Styles */
+.main-footer {
+    background-color: #6f4f37;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filters-nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filters-nav button,
+    .filters-nav select {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Remove the spinner buttons from number inputs */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+    appearance: textfield; /* For modern browsers */
+}
+
+/* Filter Navigation */
+.filters-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.filters-nav label {
+    margin-right: 10px;
+    font-size: 1.1rem;
+    color: #6f4f37;
+}
+
+.filters-nav select, .filters-nav button {
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    background-color: #8d6e63;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.filters-nav select {
+    font-size: 1rem;
+}
+
+.filters-nav button:hover {
+    background-color: #7b5d4d;
+}
+
+.filters-nav div {
+    display: flex;
+    align-items: center;
+}
+
+.filters-nav div:last-child {
+    margin-right: 0;
+}
+
+/* Error Styling */
+.error-message {
+    width: 80%;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.error-message h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.error-message p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.error-message .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.error-message .btn:hover {
+    background-color: #0056b3;
+}
+
+.exit-link {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 16px;
+    z-index: 999;
+}
+
+.main-footer p {
+    font-size: 1rem;
+}
+
+.register-form h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #8B4513; /* Coffee brown */
+}
+
+
+
+
+/* Form container */
+.register-form {
+    display: flex;
+    flex-direction: column; /* Ensure children are stacked */
+    justify-content: center; /* Vertically centers the form */
+    align-items: center; /* Horizontally centers the form */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Matches your overall page style */
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+    margin-top: 0; /* Resetting margin */
+}
+
+/* Input styling */
+.register-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.register-form input:focus {
+    border-color: #8B4513; /* Coffee brown focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(139, 69, 19, 0.5); /* Coffee brown shadow */
+}
+
+/* Button styling */
+.register-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #8B4513; /* Coffee brown */
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.register-form button:hover {
+    background-color: #5A3311; /* Darker coffee brown */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column; /* Ensure children are stacked */
+    justify-content: center; /* Vertically centers the form */
+    align-items: center; /* Horizontally centers the form */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Matches your overall page style */
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+    margin-top: 0; /* Resetting margin */
+}
+
+.login-form h1 {
+    font-size: 1.8rem;
+    color: #8B4513; /* Coffee brown */
+    margin-bottom: 20px;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: #8B4513; /* Highlight color for focus */
+    box-shadow: 0 0 4px rgba(139, 69, 19, 0.2); /* Subtle glow */
+}
+
+.login-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #8B4513; /* Coffee brown */
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-form button:hover {
+    background-color: #5e3311; /* Darker coffee brown for hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.login-form button:active {
+    transform: translateY(0); /* Reset on click */
+}
+
+.login-form p {
+    font-size: 1rem;
+    color: #e74c3c; /* Red for error messages */
+    margin-top: 10px;
+}
+/* Main container for order history */
+.order-history-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    text-align: center;
+    color: #3e2723; /* Dark brown */
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.order-box {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+.order-header {
+    border-bottom: 2px solid #f5f5f5;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.order-footer {
+    border-top: 2px solid #f5f5f5;
+    padding-top: 10px;
+    margin-top: 15px;
+}
+
+.order-detail {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.order-id {
+    font-weight: bold;
+    color: #3e2723; /* Dark brown */
+}
+
+.order-status {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.order-status.pending {
+    color: orange;
+}
+
+.order-status.completed {
+    color: green;
+}
+
+.order-status.cancelled {
+    color: red;
+}
+
+.order-items p {
+    margin: 5px 0;
+}
+
+strong {
+    font-weight: bold;
+}
+
+.order-footer .order-detail {
+    margin-bottom: 8px;
+}
+/* Main profile container */
+.profile-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header h2 {
+    text-align: center;
+    color: #3e2723; /* Dark brown */
+    font-size: 2em;
+    margin-bottom: 30px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+}
+
+.user-details, .user-settings {
+    margin-bottom: 30px;
+}
+
+.user-details h3, .user-settings h3 {
+    color: #3e2723;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.user-info-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    font-size: 1.1em;
+}
+
+table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+table td {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.settings-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.settings-buttons .button {
+    display: inline-block;
+    background-color: #3e2723;
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.settings-buttons .button:hover {
+    background-color: #5d4037;
+}
+
+.settings-buttons .back-button {
+    background-color: #8d6e63;
+}
+
+.settings-buttons .back-button:hover {
+    background-color: #6d4c41;
+}
+
+@media (max-width: 768px) {
+    .settings-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .settings-buttons .button {
+        width: 100%;
+        text-align: center;
+    }
+}
+/* Form container for Change Username, Change Password, and Update Email */
+.form-container {
+    max-width: 500px; /* Limit the width to create a boxed effect */
+    margin: 0 auto; /* Center the form horizontally */
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 40px; /* Add some space from the top */
+}
+
+.form-container h3 {
+    font-size: 1.5em;
+    color: #3e2723; /* Dark brown */
+    margin-bottom: 20px;
+}
+
+.form-container label {
+    display: block;
+    font-size: 1.1em;
+    color: #6f4f37; /* Coffee brown */
+    margin-bottom: 5px;
+}
+
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="password"],
+.form-container button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    box-sizing: border-box;
+}
+
+.form-container input:focus {
+    border-color: #8B4513; /* Coffee brown focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(139, 69, 19, 0.5);
+}
+
+.form-container button {
+    background-color: #8B4513; /* Coffee brown */
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.form-container button:hover {
+    background-color: #5A3311; /* Darker coffee brown */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+.form-container button:active {
+    transform: translateY(0); /* Reset on click */
+}
+
+.form-container .alert {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #d4edda;
+    color: #155724;
+    border-radius: 5px;
+    border: 1px solid #c3e6cb;
+}
+
+/* Make form inputs and buttons responsive */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+    }
+    .form-container input,
+    .form-container button {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
+.go-back-button {
+    background-color: #f44336; /* Red color */
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.go-back-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
