@@ -100,4 +100,57 @@ try {
 
                     <div class="order-detail">
                         <strong>Status:</strong>
-                        <span class="order
+                        <span class="order-status <?= strtolower($order['status']); ?>">
+                            <?= ucfirst($order['status']); ?>
+                        </span>
+                    </div>
+
+                    <div class="order-detail">
+                        <strong>Date/Time:</strong> <?= htmlspecialchars($order['order_date']); ?>
+                    </div>
+
+                    <!-- Ordered Items -->
+                    <div class="order-detail">
+                        <strong>Items Ordered:</strong>
+                        <?php
+                        // Fetch items for this order
+                        $order_id = $order['order_id'];
+                        $stmt = $conn->prepare("SELECT oi.*, p.name, p.price FROM order_items oi 
+                                                JOIN products p ON oi.product_id = p.product_id 
+                                                WHERE oi.order_id = ?");
+                        $stmt->execute([$order_id]);
+                        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        
+                        // Display each item in this order
+                        foreach ($items as $item):
+                        ?>
+                            <p>Product: <?= htmlspecialchars($item['name']); ?> | 
+                               Quantity: <?= $item['quantity']; ?> | 
+                               Price: £<?= number_format($item['price'], 2); ?></p>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <!-- Additional Order Information -->
+                    <div class="order-detail">
+                        <strong>Shipping Address:</strong> <?= htmlspecialchars($order['shipping_address']); ?>
+                    </div>
+
+                    <div class="order-detail">
+                        <strong>Payment Method:</strong> <?= htmlspecialchars($order['payment_method']); ?>
+                    </div>
+
+                    <div class="order-detail">
+                        <strong>Total Price:</strong> £<?= number_format($order['total_price'], 2); ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>You have not placed any orders yet.</p>
+        <?php endif; ?>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; <?php date('Y'); ?> Tyne Brew Coffee. All rights reserved.</p>
+    </footer>
+</body>
+</html>
