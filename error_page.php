@@ -1,3 +1,4 @@
+<?php
 
 $errorMessage = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : "An unexpected error occurred. Please try again later.";
 ?>
@@ -33,3 +34,10 @@ $errorMessage = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : "An u
         </ul>
     </div>
 </main>
+
+<footer class="main-footer">
+    <p>&copy; <?php date('Y'); ?> Tyne Brew Coffee. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
