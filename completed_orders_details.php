@@ -63,3 +63,61 @@ if (empty($orderItems)) {
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Order Details</h1>
+
+        <!-- General Order Information -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>General Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Order ID:</strong> <?= htmlspecialchars($order['order_id']) ?></p>
+                <p><strong>Customer Name:</strong> <?= htmlspecialchars($order['billing_name']) ?></p>
+                <p><strong>Billing Address:</strong> <?= htmlspecialchars($order['billing_address']) ?></p>
+                <p><strong>Shipping Address:</strong> <?= htmlspecialchars($order['shipping_address']) ?></p>
+                <p><strong>Payment Method:</strong> <?= htmlspecialchars($order['payment_method']) ?></p>
+                <p><strong>Order Status:</strong> <?= ucfirst(htmlspecialchars($order['status'])) ?></p>
+                <p><strong>Order Date:</strong> <?= date('d, F Y', strtotime($order['order_date'])) ?></p>
+                <p><strong>Total Price:</strong> £<?= number_format($order['total_price'], 2) ?></p>
+            </div>
+        </div>
+
+        <!-- Order Items -->
+        <div class="card">
+            <div class="card-header">
+                <h5>Order Items</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($orderItems as $item): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($item['name']) ?></td>
+                            <td><?= htmlspecialchars($item['quantity']) ?></td>
+                            <td>£<?= number_format($item['price'], 2) ?></td>
+                            <td>£<?= number_format($item['total'], 2) ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Back to Completed Orders -->
+        <a href="admin_completed_orders.php" class="btn btn-secondary mt-3">Back to Completed Orders</a>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<footer class="main-footer">
+    <p>&copy; <?php date('Y'); ?> Tyne Brew Coffee. All rights reserved.</p>
+</footer>
+</html>
