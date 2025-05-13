@@ -1,4 +1,46 @@
-);
+<?php
+include_once 'session_manager.php';
+include_once 'db.php';
+include_once 'auth.php';
+
+ensureAuthenticated();
+displayAdminLink();
+
+// Initialize database connection
+$db = new Database();
+$conn = $db->connect();
+if ($conn === null) {
+    header("Location: error_page.php?error=Database error.");
+    exit;
+}
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Ensure the user is logged in
+    if (!isset($_SESSION['username'])) {
+        header("Location: login.php");
+        exit();
+    }
+
+    $username = $_SESSION['username'];
+
+    // Get and sanitize user input
+    $current_password = trim($_POST['current_password']);
+    $new_password = trim($_POST['new_password']);
+    $confirm_password = trim($_POST['confirm_new_password']);
+
+    // Validate inputs
+    if (empty($current_password) || empty($new_password) || empty($confirm_password)) {
+        echo '<div class="alert alert-danger">All fields are required.</div>';
+    } elseif ($new_password !== $confirm_password) {
+        echo '<div class="alert alert-danger">Passwords do not match. Please try again.</div>';
+    } elseif (strlen($new_password) < 8) {
+        echo '<div class="alert alert-danger">New password must be at least 8 characters long.</div>';
+    } else {
+        // Verify the current password
+        $stmt = $conn->prepare("SELECT password FROM users WHERE username = ?");
+        $stmt->execute([$username]);
         $stored_password = $stmt->fetchColumn();
 
         if ($stored_password && password_verify($current_password, $stored_password)) {

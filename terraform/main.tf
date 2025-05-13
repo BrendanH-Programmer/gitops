@@ -12,9 +12,8 @@ variable "resource_group_name" {
   default     = "example-resources"  # Default value, or you can specify during apply
 }
 
-resource "azurerm_virtual_network" "example" {
-  name                = "example-vnet"
-  location            = "UK SOUTH"
-  resource_group_name = var.resource_group_name  # Dynamically refer to resource group
-  address_space       = ["10.0.0.0/16"]
+resource "azurerm_resource_group" "example" {
+-  name     = "example-resources"
++  name     = "example-resources-v2"   # new name
+  location = "UK SOUTH"
 }
