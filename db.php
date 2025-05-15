@@ -1,9 +1,9 @@
 <?php
 class Database {
-    private string $host = "";
-    private string $dbname = "";
-    private string $user = "";
-    private string $pass = "";
+    private string $host = "213.171.200.34";
+    private string $dbname = "bhenderson";
+    private string $user = "bhenderson";
+    private string $pass = "Password20*";
     private string $dsn;
 
     public function __construct() {
