@@ -1,0 +1,26 @@
+name: Website Stress Test
+
+on:
+  push:
+    branches:
+      - main  # or '**' for all branches
+
+jobs:
+  stress-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install ApacheBench
+        run: sudo apt-get update && sudo apt-get install -y apache2-utils
+
+      - name: Run Stress Test on Homepage
+        run: |
+          ab -n 500 -c 25 https://digitalwhiz.co.uk/L5SW/Brendan/index.php || echo "Stress test failed or site unreachable."
+
+      - name: Run Stress Test on shopping Cart Page
+        run: |
+          ab -n 300 -c 20 https://digitalwhiz.co.uk/L5SW/Brendan/shopping_cart.php || echo "Stress test failed or site unreachable."
+
+      - name: Run Stress Test on Login Page
+        run: |
+          ab -n 200 -c 15 https://digitalwhiz.co.uk/L5SW/Brendan/login.php || echo "Stress test failed or site unreachable."
